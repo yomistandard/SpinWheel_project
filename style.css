@@ -36,18 +36,6 @@ canvas {
   display: block; /* Remove inline gap */
 }
 
-/* Pointer styling */
-#pointer {
-  position: absolute;
-  top: 230px; /* Adjust as needed for vertical placement */
-  left: 30%; transform: translateX(50%); 
-  width: 0;
-  height: 0;
- border-top: 3vh solid transparent; /* vertical size based on viewport height */
-  border-bottom: 3vh solid transparent;
-  border-left: 12vw solid red; /* arrow length proportional to viewport width */
-    z-index: 10; /* Ensure pointer is above the wheel */
-}
 
 
 /* Controls styling */
@@ -152,22 +140,5 @@ button:disabled {
     flex-direction: column;
     align-items: flex-start;
   }
-  #pointer {
-  position: absolute;
-  top: 180px; /* Adjust as needed for vertical placement */
-  left: 40%; transform: translateX(50%); 
-  
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 10vw solid red; /* Use vw for responsive arrow length */
-  z-index: 10;
-}
-}
-@media(max-width: 400px)  {
-  #pointer {
-    top: 140px; /* move up slightly on very small screens if needed */
- border-top: 2vh solid transparent; /* vertical size based on viewport height */
-  border-bottom: 2vh solid transparent;
-  border-left: 10vw solid red; /* arrow length proportional to viewport width */
-}
+
 }
