@@ -117,7 +117,7 @@ function spinToSegment(targetSegmentIndex) {
   // Since the wheel rotates clockwise, final rotation = totalRotation + (360 - segmentCenterAngle)
   const finalWheelRotation = totalRotation + (360 - segmentCenterAngle);
 
-  const duration = 6000; // 6 seconds
+  const duration = 7000; // 7 seconds
   const startTime = performance.now();
 
 //   function animate(currentTime) {
