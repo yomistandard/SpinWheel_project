@@ -204,6 +204,18 @@ document.getElementById('spinButton').addEventListener('click', () => {
   usedNumbers.add(targetSegmentIndex+1);
 
   spinToSegment(targetSegmentIndex);
+  if (usedNumbers.size === segments) {
+  const messageDiv = document.getElementById('roundOverMessage');
+  messageDiv.innerHTML = '🎉 <span style="color:gold;">Round Over!</span> 🎉';
+  messageDiv.style.display = 'block';
+
+  // Add colorful background
+  messageDiv.style.background = 'linear-gradient(45deg, #ff9a9e, #fad0c4)';
+  messageDiv.style.color = '#fff';
+
+  // Disable further spins if needed
+  document.getElementById('spinButton').disabled = true;
+}
 });
 
 // Display results
@@ -214,6 +226,8 @@ function displayResults() {
     resultsDiv.innerHTML += `<div class="player-result"><strong>${p.name}:</strong> ${p.result}</div>`;
   });
 }
+// Inside your spin button handler:
+
 
 // Initialize
 drawWheel();
