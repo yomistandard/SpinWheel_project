@@ -17,7 +17,41 @@ for(let i=0; i<segments; i++){
 }
 
 // Draw the wheel with optional rotation
-function drawWheel(rotation=0){
+// function drawWheel(rotation=0){
+//   ctx.clearRect(0, 0, 500, 500);
+//   const centerX = 250;
+//   const centerY = 250;
+//   const radius = 220;
+//   ctx.save();
+//   ctx.translate(centerX, centerY);
+//   ctx.rotate(rotation * Math.PI / 180);
+//   for(let i=0; i<segments; i++){
+//     const startAngle = (i * 360 / segments) * Math.PI / 180;
+//     const endAngle = ((i+1) * 360 / segments) * Math.PI / 180;
+//     ctx.beginPath();
+//     ctx.moveTo(0, 0);
+//     ctx.arc(0, 0, radius, startAngle, endAngle);
+//     ctx.closePath();
+//     ctx.fillStyle = segmentColors[i];
+//     ctx.fill();
+
+//     // Add labels
+//     ctx.save();
+//     ctx.rotate(startAngle + (Math.PI / segments));
+//     ctx.translate(radius - 20, 0);
+//     ctx.rotate(Math.PI / 2);
+//     ctx.fillStyle = "#000";
+//     ctx.font = "bold 12px Arial";
+//     ctx.textAlign = "center";
+//     ctx.fillText(i+1, 0, 4);
+//     ctx.restore();
+//   }
+//   ctx.restore();
+// }
+
+// // Draw the wheel initially
+// drawWheel();
+function drawWheel(rotation=0, highlightSegmentIndex = null){
   ctx.clearRect(0, 0, 500, 500);
   const centerX = 250;
   const centerY = 250;
@@ -32,7 +66,13 @@ function drawWheel(rotation=0){
     ctx.moveTo(0, 0);
     ctx.arc(0, 0, radius, startAngle, endAngle);
     ctx.closePath();
-    ctx.fillStyle = segmentColors[i];
+
+    // Set fill color
+    if(i === highlightSegmentIndex){
+      ctx.fillStyle = 'red'; // highlight the winning segment
+    } else {
+      ctx.fillStyle = segmentColors[i];
+    }
     ctx.fill();
 
     // Add labels
@@ -48,8 +88,6 @@ function drawWheel(rotation=0){
   }
   ctx.restore();
 }
-
-// Draw the wheel initially
 drawWheel();
 
 // Function to get the angle of a segment's center
@@ -82,31 +120,57 @@ function spinToSegment(targetSegmentIndex) {
   const duration = 6000; // 6 seconds
   const startTime = performance.now();
 
-  function animate(currentTime) {
-    const elapsed = currentTime - startTime;
-    if(elapsed > duration){
-      // Set wheel to final position
-      currentAngle = finalWheelRotation % 360;
-      drawWheel(currentAngle);
-      // Save result
-      players.push({name: currentPlayer, result: targetSegmentIndex + 1});
-      hasSpun[currentPlayer] = true;
-      displayResults();
+//   function animate(currentTime) {
+//     const elapsed = currentTime - startTime;
+//     if(elapsed > duration){
+//       // Set wheel to final position
+//       currentAngle = finalWheelRotation % 360;
+//       drawWheel(currentAngle);
+//       // Save result
+//       players.push({name: currentPlayer, result: targetSegmentIndex + 1});
+//       hasSpun[currentPlayer] = true;
+//       displayResults();
 
-      // Reset for next user
-      currentPlayer = null;
-      document.getElementById('playerName').value = '';
-      document.getElementById('playerForm').style.display = 'block';
-      document.getElementById('spinButton').disabled = true;
-      isSpinning = false;
-      return;
-    }
-    const progress = elapsed / duration;
-    const easedProgress = 1 - Math.pow(1 - progress, 3);
-    currentAngle = easedProgress * finalWheelRotation;
-    drawWheel(currentAngle);
-    requestAnimationFrame(animate);
+//       // Reset for next user
+//       currentPlayer = null;
+//       document.getElementById('playerName').value = '';
+//       document.getElementById('playerForm').style.display = 'block';
+//       document.getElementById('spinButton').disabled = true;
+//       isSpinning = false;
+//       return;
+//     }
+//     const progress = elapsed / duration;
+//     const easedProgress = 1 - Math.pow(1 - progress, 3);
+//     currentAngle = easedProgress * finalWheelRotation;
+//     drawWheel(currentAngle);
+//     requestAnimationFrame(animate);
+//   }
+
+function animate(currentTime) {
+  const elapsed = currentTime - startTime;
+  if(elapsed > duration){
+    // Set wheel to final position
+    currentAngle = finalWheelRotation % 360;
+    drawWheel(currentAngle, targetSegmentIndex);
+    // Save result
+    players.push({name: currentPlayer, result: targetSegmentIndex + 1});
+    hasSpun[currentPlayer] = true;
+    displayResults();
+
+    // Reset for next user
+    currentPlayer = null;
+    document.getElementById('playerName').value = '';
+    document.getElementById('playerForm').style.display = 'block';
+    document.getElementById('spinButton').disabled = true;
+    isSpinning = false;
+    return;
   }
+  const progress = elapsed / duration;
+  const easedProgress = 1 - Math.pow(1 - progress, 3);
+  currentAngle = easedProgress * finalWheelRotation;
+  drawWheel(currentAngle, targetSegmentIndex);
+  requestAnimationFrame(animate);
+}
 
   requestAnimationFrame(animate);
 }
