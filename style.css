@@ -1,0 +1,173 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body { 
+  font-family: Arial, sans-serif; 
+  background: #f0f8ff;
+  margin: 0; 
+  padding: 20px;
+  text-align: center;
+}
+
+/* Heading */
+h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+/* Container for wheel and pointer */
+#wheelContainer {
+  position: relative; 
+  width: 90%; /* Use relative width for responsiveness */
+  max-width: 500px; /* Limit max size on large screens */
+  aspect-ratio: 1 / 1; /* Maintain aspect ratio for a square */
+  margin: 0 auto;
+}
+
+/* Canvas styling */
+canvas { 
+  width: 100%; /* Make canvas fill container */
+  height: auto; /* Keep aspect ratio */
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  display: block; /* Remove inline gap */
+}
+
+/* Pointer styling */
+#pointer {
+  position: absolute;
+  top: 230px; /* Adjust as needed for vertical placement */
+  left: 30%; transform: translateX(50%); 
+  width: 0;
+  height: 0;
+ border-top: 3vh solid transparent; /* vertical size based on viewport height */
+  border-bottom: 3vh solid transparent;
+  border-left: 12vw solid red; /* arrow length proportional to viewport width */
+    z-index: 10; /* Ensure pointer is above the wheel */
+}
+
+
+/* Controls styling */
+#controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 10px;
+}
+
+/* Buttons styling */
+button { 
+  background-color: #4CAF50;
+  color: white; 
+  padding: 10px 20px;
+  border: none; 
+  cursor: pointer; 
+  font-size: 1em;
+  border-radius: 5px; 
+  transition: background 0.3s;
+  min-width: 100px; /* Ensures buttons are usable on small screens */
+}
+
+button:hover {
+  background-color: #90b079;
+}
+
+button:disabled { 
+  background-color: #888; 
+  cursor: not-allowed;
+}
+
+/* Player form styling */
+#playerForm { 
+  margin-top: 20px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px; 
+  width: 90%;
+  max-width: 300px; /* Limit width on large screens */
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+#playerForm input { 
+  padding: 8px; 
+  font-size: 1em;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%; /* Make input fill container */
+  max-width: 200px;
+  margin: 24px 0;
+  }
+
+
+/* Results styling */
+#results {
+  margin-top: 30px;
+  width: 90%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#results h2 {
+  margin-top: 0;
+}
+
+/* Player result entries */
+.player-result {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Responsive adjustments for smaller screens */
+@media(max-width: 600px){
+  #wheelContainer {
+    width: 90%;
+  }
+  #playerForm input {
+    width: 100%;
+    margin: 24px 0;
+  }
+  #controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  button {
+    width: 60%;
+    max-width: none;
+  }
+  .player-result {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #pointer {
+  position: absolute;
+  top: 180px; /* Adjust as needed for vertical placement */
+  left: 40%; transform: translateX(50%); 
+  
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 10vw solid red; /* Use vw for responsive arrow length */
+  z-index: 10;
+}
+}
+@media(max-width: 400px)  {
+  #pointer {
+    top: 140px; /* move up slightly on very small screens if needed */
+ border-top: 2vh solid transparent; /* vertical size based on viewport height */
+  border-bottom: 2vh solid transparent;
+  border-left: 10vw solid red; /* arrow length proportional to viewport width */
+}
+}
